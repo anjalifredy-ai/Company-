@@ -45,7 +45,7 @@ right:-100px;
 }
 
 .container{
-padding:30px 20px;
+padding:30px 20px 120px;
 max-width:1000px;
 margin:auto;
 }
@@ -76,6 +76,7 @@ padding:15px 20px;
 display:flex;
 align-items:center;
 gap:10px;
+width:100%;
 }
 
 .search input{
@@ -91,8 +92,8 @@ font-size:17px;
 background:none;
 border:none;
 font-size:20px;
-color:white;
 cursor:pointer;
+color:white;
 }
 
 .actions{
@@ -109,6 +110,7 @@ border:1px solid rgba(255,255,255,.1);
 border-radius:25px;
 padding:20px;
 transition:.3s;
+cursor:pointer;
 }
 
 .card:hover{
@@ -127,6 +129,7 @@ font-size:1.2rem;
 
 .news{
 background:rgba(255,255,255,.07);
+backdrop-filter:blur(20px);
 padding:18px;
 border-radius:20px;
 margin-bottom:12px;
@@ -143,6 +146,12 @@ padding:15px 25px;
 border-radius:999px;
 display:flex;
 gap:25px;
+border:1px solid rgba(255,255,255,.1);
+font-size:22px;
+}
+
+.bottom span{
+cursor:pointer;
 }
 </style>
 </head>
@@ -157,14 +166,16 @@ gap:25px;
 <div class="logo">INTERN</div>
 <div class="tagline">Search • Discover • Create</div>
 
-<div class="search">
-🔍
-<input type="text" placeholder="Search anything...">
-<button>🎤</button>
-<button>📷</button>
-</div>
+<form class="search" action="https://www.google.com/search" method="GET">
+<span>🔍</span>
+<input type="text" name="q" placeholder="Search anything..." required>
+<button type="submit">🔎</button>
+<button type="button">🎤</button>
+<button type="button">📷</button>
+</form>
 
 <div class="actions">
+
 <div class="card">
 <h3>✨ AI Search</h3>
 <p>Ask anything instantly</p>
@@ -184,23 +195,46 @@ gap:25px;
 <h3>🎬 Movies</h3>
 <p>Latest releases</p>
 </div>
+
 </div>
 
 <h2 class="section-title">🔥 Trending</h2>
 
 <div class="news">
-AI is changing the future of search.
+🚀 Artificial Intelligence is changing the future of search.
 </div>
 
 <div class="news">
-Latest cricket updates and scores.
+🏏 Live cricket scores and breaking sports updates.
+</div>
+
+<div class="news">
+🎬 Discover trending movies and web series.
 </div>
 
 </div>
 
 <div class="bottom">
-🏠 🔍 🔔 👤
+<span>🏠</span>
+<span>🔍</span>
+<span>🔔</span>
+<span>👤</span>
 </div>
+
+<script>
+const cards = document.querySelectorAll('.card');
+
+cards.forEach((card,index)=>{
+card.style.opacity='0';
+card.style.transform='translateY(30px)';
+
+setTimeout(()=>{
+card.style.transition='0.5s';
+card.style.opacity='1';
+card.style.transform='translateY(0)';
+},index*150);
+});
+</script>
 
 </body>
 </html>
