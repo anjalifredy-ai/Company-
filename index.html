@@ -1,240 +1,262 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Intern</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intern Search</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; background: #fff; }
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    /* HOME */
+    #home { min-height: 100vh; display: flex; flex-direction: column; }
+    #home-inner { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 16px 80px; }
+    .logo { font-size: 48px; font-weight: 700; letter-spacing: -1px; cursor: pointer; }
+    .logo span:nth-child(1) { color: #4f46e5; }
+    .logo span:nth-child(2) { color: #dc2626; }
+    .logo span:nth-child(3) { color: #d97706; }
+    .logo span:nth-child(4) { color: #4f46e5; }
+    .logo span:nth-child(5) { color: #16a34a; }
+    .logo span:nth-child(6) { color: #dc2626; }
+    .search-bar { display: flex; align-items: center; border: 1px solid #dfe1e5; border-radius: 24px; padding: 10px 14px; gap: 8px; width: 100%; max-width: 480px; margin-top: 24px; }
+    .search-bar:focus-within { box-shadow: 0 1px 6px rgba(32,33,36,0.28); border-color: transparent; }
+    .search-bar input { flex: 1; border: none; outline: none; font-size: 16px; color: #202124; min-width: 0; }
+    .clear-btn { background: none; border: none; cursor: pointer; padding: 2px; display: none; }
+    .home-btns { display: flex; gap: 10px; margin-top: 24px; flex-wrap: wrap; justify-content: center; }
+    .home-btn { background: #f8f9fa; border: 1px solid #f8f9fa; border-radius: 4px; padding: 10px 16px; font-size: 14px; color: #3c4043; cursor: pointer; }
+    .home-btn:hover { border-color: #dadce0; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+    .lang-line { margin-top: 24px; font-size: 13px; color: #202124; }
+    .lang-line a { color: #1a0dab; text-decoration: none; margin: 0 4px; }
+    #home-footer { background: #f2f2f2; border-top: 1px solid #e4e4e4; padding: 10px 16px; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; border-top: 1px solid #e4e4e4; padding-top: 8px; }
+    .footer-links a { color: #70757a; text-decoration: none; font-size: 13px; }
 
-<style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
-
-body{
-background:linear-gradient(135deg,#0f172a,#111827,#1e1b4b);
-min-height:100vh;
-color:white;
-overflow-x:hidden;
-}
-
-.glow{
-position:fixed;
-width:300px;
-height:300px;
-border-radius:50%;
-filter:blur(120px);
-opacity:.4;
-z-index:-1;
-}
-
-.g1{
-background:#3b82f6;
-top:-100px;
-left:-100px;
-}
-
-.g2{
-background:#8b5cf6;
-bottom:-100px;
-right:-100px;
-}
-
-.container{
-padding:30px 20px 120px;
-max-width:1000px;
-margin:auto;
-}
-
-.logo{
-font-size:4rem;
-font-weight:700;
-text-align:center;
-background:linear-gradient(90deg,#60a5fa,#a78bfa,#f472b6);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-margin-top:50px;
-}
-
-.tagline{
-text-align:center;
-color:#cbd5e1;
-margin-top:10px;
-margin-bottom:40px;
-}
-
-.search{
-background:rgba(255,255,255,.08);
-backdrop-filter:blur(20px);
-border:1px solid rgba(255,255,255,.15);
-border-radius:999px;
-padding:15px 20px;
-display:flex;
-align-items:center;
-gap:10px;
-width:100%;
-}
-
-.search input{
-flex:1;
-background:none;
-border:none;
-outline:none;
-color:white;
-font-size:17px;
-}
-
-.search button{
-background:none;
-border:none;
-font-size:20px;
-cursor:pointer;
-color:white;
-}
-
-.actions{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:15px;
-margin-top:25px;
-}
-
-.card{
-background:rgba(255,255,255,.07);
-backdrop-filter:blur(20px);
-border:1px solid rgba(255,255,255,.1);
-border-radius:25px;
-padding:20px;
-transition:.3s;
-cursor:pointer;
-}
-
-.card:hover{
-transform:translateY(-5px);
-}
-
-.card h3{
-margin-bottom:8px;
-}
-
-.section-title{
-margin-top:35px;
-margin-bottom:15px;
-font-size:1.2rem;
-}
-
-.news{
-background:rgba(255,255,255,.07);
-backdrop-filter:blur(20px);
-padding:18px;
-border-radius:20px;
-margin-bottom:12px;
-}
-
-.bottom{
-position:fixed;
-bottom:15px;
-left:50%;
-transform:translateX(-50%);
-background:rgba(255,255,255,.08);
-backdrop-filter:blur(20px);
-padding:15px 25px;
-border-radius:999px;
-display:flex;
-gap:25px;
-border:1px solid rgba(255,255,255,.1);
-font-size:22px;
-}
-
-.bottom span{
-cursor:pointer;
-}
-</style>
+    /* RESULTS */
+    #results { display: none; min-height: 100vh; }
+    #top-nav { position: sticky; top: 0; background: #fff; z-index: 100; border-bottom: 1px solid #ebebeb; }
+    #nav-inner { display: flex; align-items: center; padding: 8px 12px; gap: 10px; }
+    .mini-logo { font-size: 24px; font-weight: 700; cursor: pointer; letter-spacing: -1px; flex-shrink: 0; }
+    .top-bar { display: flex; align-items: center; border: 1px solid #dfe1e5; border-radius: 22px; padding: 7px 12px; gap: 6px; flex: 1; min-width: 0; }
+    .top-bar input { flex: 1; border: none; outline: none; font-size: 15px; color: #202124; min-width: 0; }
+    .avatar { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg,#4f46e5,#7c3aed); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; flex-shrink: 0; }
+    #tabs { display: flex; overflow-x: auto; padding: 0 12px; border-top: 1px solid #ebebeb; scrollbar-width: none; }
+    #tabs::-webkit-scrollbar { display: none; }
+    .tab-btn { background: none; border: none; border-bottom: 3px solid transparent; padding: 9px 12px; font-size: 13px; color: #70757a; cursor: pointer; white-space: nowrap; font-family: Arial,sans-serif; flex-shrink: 0; }
+    .tab-btn.active { color: #1a73e8; border-bottom: 3px solid #1a73e8; }
+    #results-body { padding: 10px 14px 40px; }
+    .stats { font-size: 12px; color: #70757a; margin-bottom: 14px; }
+    .result-item { margin-bottom: 24px; }
+    .result-site { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; }
+    .site-name { font-size: 13px; color: #202124; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .site-url { font-size: 11px; color: #70757a; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .result-title { display: block; font-size: 17px; color: #1a0dab; text-decoration: none; line-height: 1.3; margin-bottom: 3px; word-break: break-word; }
+    .result-title:hover { text-decoration: underline; }
+    .result-snippet { font-size: 13px; color: #4d5156; line-height: 1.55; word-break: break-word; }
+    .image-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; }
+    .image-card img { width: 100%; height: 90px; object-fit: cover; border-radius: 6px; background: #f8f9fa; display: block; }
+    .image-cap { font-size: 10px; color: #70757a; margin-top: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .loading-bar { height: 3px; background: #e8eaed; border-radius: 2px; overflow: hidden; margin-bottom: 10px; }
+    .loading-fill { height: 100%; width: 60%; background: linear-gradient(90deg,#4285F4,#34A853,#FBBC05,#EA4335); animation: ldAnim 1.2s ease-in-out infinite; }
+    @keyframes ldAnim { 0%{transform:translateX(-100%)} 100%{transform:translateX(200%)} }
+    .error-box { background: #fef7f0; border: 1px solid #f5c6a0; border-radius: 8px; padding: 14px; color: #c45500; font-size: 13px; margin-top: 8px; }
+    .related-box { margin-top: 24px; }
+    .related-title { font-size: 16px; color: #202124; font-weight: 400; margin-bottom: 10px; }
+    .related-grid { display: grid; grid-template-columns: 1fr 1fr; }
+    .related-chip { display: flex; align-items: center; gap: 10px; padding: 12px 0; border-top: 1px solid #ebebeb; color: #202124; font-size: 13px; cursor: pointer; }
+    .pagination { display: flex; flex-direction: column; align-items: center; margin-top: 32px; gap: 12px; }
+    .page-btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px; }
+    .page-btn { background: none; border: none; color: #1a0dab; font-size: 13px; cursor: pointer; padding: 7px 10px; font-family: Arial,sans-serif; }
+    .page-num { background: none; border: none; font-size: 13px; cursor: pointer; padding: 7px 10px; color: #70757a; font-family: Arial,sans-serif; }
+    .page-num.active { color: #1a0dab; font-weight: 700; text-decoration: underline; }
+    .pagi-logo { font-size: 24px; font-weight: 700; letter-spacing: 2px; }
+  </style>
 </head>
-
 <body>
 
-<div class="glow g1"></div>
-<div class="glow g2"></div>
-
-<div class="container">
-
-<div class="logo">INTERN</div>
-<div class="tagline">Search • Discover • Create</div>
-
-<form class="search" action="https://www.google.com/search" method="GET">
-<span>🔍</span>
-<input type="text" name="q" placeholder="Search anything..." required>
-<button type="submit">🔎</button>
-<button type="button">🎤</button>
-<button type="button">📷</button>
-</form>
-
-<div class="actions">
-
-<div class="card">
-<h3>✨ AI Search</h3>
-<p>Ask anything instantly</p>
+<!-- HOME -->
+<div id="home">
+  <div id="home-inner">
+    <div class="logo" onclick="goHome()">
+      <span>I</span><span>n</span><span>t</span><span>e</span><span>r</span><span>n</span>
+    </div>
+    <div class="search-bar">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#9aa0a6" stroke-width="2"/><path d="M20 20l-3-3" stroke="#9aa0a6" stroke-width="2" stroke-linecap="round"/></svg>
+      <input id="home-input" type="text" placeholder="Search..." onkeydown="if(event.key==='Enter')doSearch()" oninput="toggleClear('home-input','home-clear')" />
+      <button class="clear-btn" id="home-clear" onclick="clearInput('home-input','home-clear')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="#9aa0a6" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="home-btns">
+      <button class="home-btn" onclick="doSearch()">Intern Search</button>
+      <button class="home-btn" onclick="luckySearch()">I'm Feeling Lucky</button>
+    </div>
+    <div class="lang-line">Search in: <a href="#">Hindi</a> · <a href="#">English</a></div>
+  </div>
+  <div id="home-footer">
+    <div style="color:#70757a;font-size:13px;">🇮🇳 India</div>
+    <div class="footer-links">
+      <a href="#">About</a><a href="#">Advertising</a><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Settings</a>
+    </div>
+  </div>
 </div>
 
-<div class="card">
-<h3>🏏 Cricket</h3>
-<p>Live scores & updates</p>
-</div>
-
-<div class="card">
-<h3>📰 News</h3>
-<p>Trending stories</p>
-</div>
-
-<div class="card">
-<h3>🎬 Movies</h3>
-<p>Latest releases</p>
-</div>
-
-</div>
-
-<h2 class="section-title">🔥 Trending</h2>
-
-<div class="news">
-🚀 Artificial Intelligence is changing the future of search.
-</div>
-
-<div class="news">
-🏏 Live cricket scores and breaking sports updates.
-</div>
-
-<div class="news">
-🎬 Discover trending movies and web series.
-</div>
-
-</div>
-
-<div class="bottom">
-<span>🏠</span>
-<span>🔍</span>
-<span>🔔</span>
-<span>👤</span>
+<!-- RESULTS -->
+<div id="results">
+  <div id="top-nav">
+    <div id="nav-inner">
+      <div class="mini-logo" onclick="goHome()">
+        <span style="color:#4f46e5">I</span><span style="color:#dc2626">n</span><span style="color:#d97706">t</span><span style="color:#4f46e5">e</span><span style="color:#16a34a">r</span><span style="color:#dc2626">n</span>
+      </div>
+      <div class="top-bar">
+        <input id="top-input" type="text" onkeydown="if(event.key==='Enter')doSearch()" oninput="toggleClear('top-input','top-clear')" />
+        <button class="clear-btn" id="top-clear" onclick="clearInput('top-input','top-clear')">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="#9aa0a6" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <button style="background:none;border:none;cursor:pointer;padding:2px;display:flex;" onclick="doSearch()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#4285F4" stroke-width="2.5"/><path d="M20 20l-3-3" stroke="#4285F4" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="avatar">I</div>
+    </div>
+    <div id="tabs">
+      <button class="tab-btn active" onclick="switchTab('all',this)">🔍 All</button>
+      <button class="tab-btn" onclick="switchTab('images',this)">🖼️ Images</button>
+      <button class="tab-btn" onclick="switchTab('news',this)">📰 News</button>
+      <button class="tab-btn" onclick="switchTab('videos',this)">▶️ Videos</button>
+    </div>
+  </div>
+  <div id="results-body"></div>
 </div>
 
 <script>
-const cards = document.querySelectorAll('.card');
+  const API_KEY = "AIzaSyDwLzUnqgYWAl9aduuKlgVFkV1GH8BOzTs";
+  const CX = "740bcc7132d864837";
 
-cards.forEach((card,index)=>{
-card.style.opacity='0';
-card.style.transform='translateY(30px)';
+  let currentQuery = "";
+  let currentTab = "all";
+  let currentStart = 1;
 
-setTimeout(()=>{
-card.style.transition='0.5s';
-card.style.opacity='1';
-card.style.transform='translateY(0)';
-},index*150);
-});
+  function toggleClear(inputId, btnId) {
+    const val = document.getElementById(inputId).value;
+    document.getElementById(btnId).style.display = val ? "flex" : "none";
+  }
+
+  function clearInput(inputId, btnId) {
+    document.getElementById(inputId).value = "";
+    document.getElementById(btnId).style.display = "none";
+    document.getElementById(inputId).focus();
+  }
+
+  function goHome() {
+    document.getElementById("home").style.display = "flex";
+    document.getElementById("results").style.display = "none";
+    document.getElementById("home-input").value = "";
+    currentTab = "all";
+    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+    document.querySelector(".tab-btn").classList.add("active");
+  }
+
+  function luckySearch() {
+    const picks = ["AI tools 2026","best movies 2026","how to code Python","latest tech news"];
+    const p = picks[Math.floor(Math.random() * picks.length)];
+    document.getElementById("home-input").value = p;
+    doSearch();
+  }
+
+  function switchTab(tab, btn) {
+    currentTab = tab;
+    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    doSearch(currentQuery, tab, 1);
+  }
+
+  async function doSearch(q, tab, start) {
+    q = q || document.getElementById(document.getElementById("home").style.display !== "none" ? "home-input" : "top-input").value.trim();
+    if (!q) return;
+
+    tab = tab || currentTab;
+    start = start || 1;
+    currentQuery = q;
+    currentTab = tab;
+    currentStart = start;
+
+    document.getElementById("home").style.display = "none";
+    document.getElementById("results").style.display = "block";
+    document.getElementById("top-input").value = q;
+
+    const body = document.getElementById("results-body");
+    body.innerHTML = '<div class="loading-bar"><div class="loading-fill"></div></div>';
+
+    const searchType = tab === "images" ? "&searchType=image" : "";
+    const tabQ = tab === "news" ? q + " news" : tab === "videos" ? q + " video" : q;
+
+    try {
+      const url = `https://www.googleapis.com/customsearch/v1?key=${API_KEY}&cx=${CX}&q=${encodeURIComponent(tabQ)}&start=${start}&num=10${searchType}`;
+      const res = await fetch(url);
+      const data = await res.json();
+
+      if (data.error) {
+        body.innerHTML = `<div class="error-box">⚠️ ${data.error.message}<br><small>API key ya Search Engine ID check karo.</small></div>`;
+        return;
+      }
+
+      const total = Number(data.searchInformation?.totalResults || 0).toLocaleString();
+      const time = data.searchInformation?.formattedSearchTime || "0";
+      let html = `<p class="stats">About ${total} results (${time} seconds)</p>`;
+
+      if (tab === "images") {
+        html += '<div class="image-grid">';
+        (data.items || []).forEach(item => {
+          html += `<a class="image-card" href="${item.image?.contextLink || item.link}" target="_blank">
+            <img src="${item.link}" alt="${item.title}" onerror="this.style.display='none'" />
+            <div class="image-cap">${item.displayLink}</div>
+          </a>`;
+        });
+        html += '</div>';
+      } else {
+        (data.items || []).forEach(item => {
+          html += `<div class="result-item">
+            <div class="result-site">
+              <img src="https://www.google.com/s2/favicons?domain=${item.displayLink}&sz=16" width="14" height="14" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'" />
+              <div style="min-width:0">
+                <div class="site-name">${item.displayLink}</div>
+                <div class="site-url">${item.formattedUrl}</div>
+              </div>
+            </div>
+            <a class="result-title" href="${item.link}" target="_blank">${item.htmlTitle || item.title}</a>
+            <p class="result-snippet">${item.htmlSnippet || item.snippet}</p>
+          </div>`;
+        });
+
+        // Related searches
+        if (data.relatedSearches?.nextPage) {
+          html += '<div class="related-box"><p class="related-title">Related searches</p><div class="related-grid">';
+          data.relatedSearches.nextPage.forEach(r => {
+            html += `<div class="related-chip" onclick="doSearch('${r.title.replace(/'/g,"\\'")}','${tab}',1)">🔍 ${r.title}</div>`;
+          });
+          html += '</div></div>';
+        }
+
+        // Pagination
+        html += `<div class="pagination"><div class="page-btns">`;
+        if (start > 1) html += `<button class="page-btn" onclick="doSearch('${currentQuery}','${tab}',${start-10})">◀ Prev</button>`;
+        for (let p = 1; p <= 10; p++) {
+          const s = (p-1)*10+1;
+          html += `<button class="${s===start?'page-num active':'page-num'}" onclick="doSearch('${currentQuery}','${tab}',${s})">${p}</button>`;
+        }
+        html += `<button class="page-btn" onclick="doSearch('${currentQuery}','${tab}',${start+10})">Next ▶</button>`;
+        html += `</div><div class="pagi-logo"><span style="color:#4285F4">I</span><span style="color:#EA4335">n</span><span style="color:#FBBC05">t</span><span style="color:#4285F4">e</span><span style="color:#34A853">r</span><span style="color:#EA4335">n</span></div></div>`;
+      }
+
+      if (!data.items?.length) {
+        html = `<div style="font-size:14px;color:#202124;margin-top:20px"><p>No results for <strong>${q}</strong>.</p><ul style="color:#666;font-size:13px;line-height:2;padding-left:20px;margin-top:12px"><li>Check spelling</li><li>Try different keywords</li></ul></div>`;
+      }
+
+      body.innerHTML = html;
+    } catch(e) {
+      body.innerHTML = `<div class="error-box">⚠️ Search failed. API key check karo.</div>`;
+    }
+  }
 </script>
-
 </body>
 </html>
